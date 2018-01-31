@@ -187,11 +187,18 @@ NS_ASSUME_NONNULL_BEGIN
 /// Return the title for a selected header component.
 - (nullable NSString *)dropdownMenu:(MKDropdownMenu *)dropdownMenu titleForSelectedComponent:(NSInteger)component;
 
+/// Return the title for button when selected row in component
+- (nullable NSString *)dropdownMenu:(MKDropdownMenu *)dropdownMenu titleForSelectedRow:(NSInteger)row inComponent:(NSInteger)component;
+
+
 /// Return the attributed title for a header component.
 - (nullable NSAttributedString *)dropdownMenu:(MKDropdownMenu *)dropdownMenu attributedTitleForComponent:(NSInteger)component;
 
 /// Return the attributed title for a selected header component.
 - (nullable NSAttributedString *)dropdownMenu:(MKDropdownMenu *)dropdownMenu attributedTitleForSelectedComponent:(NSInteger)component;
+
+/// Return the attributed title for a selected header component.
+- (nullable NSAttributedString *)dropdownMenu:(MKDropdownMenu *)dropdownMenu attributedTitleForSelectedRow:(NSInteger)row inComponent:(NSInteger)component;
 
 /// Return the custom view for a header component.
 - (UIView *)dropdownMenu:(MKDropdownMenu *)dropdownMenu viewForComponent:(NSInteger)component;

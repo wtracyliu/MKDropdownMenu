@@ -1138,6 +1138,24 @@ static const CGFloat kScrollViewBottomSpace = 5;
     [self updateComponentSeparators];
 }
 
+- (void)updateButtonTitleForSelectedRow:(NSInteger)row inComponent:(NSInteger)component{
+    MKDropdownMenuComponentButton *button = [self.buttons objectAtIndex:component];
+    [self updateButton:button forSelectedFRow:row inComponent:component];
+}
+
+- (void)updateButton:(MKDropdownMenuComponentButton *)button forSelectedFRow:(NSInteger)row inComponent:(NSInteger)component{
+    NSAttributedString *attributedTitle = nil;
+    if ([self.delegate respondsToSelector:@selector(dropdownMenu:attributedTitleForSelectedRow:inComponent:)]) {
+        attributedTitle = [self.delegate dropdownMenu:self attributedTitleForSelectedRow:row inComponent:component];
+    }
+    if (attributedTitle == nil && [self.delegate respondsToSelector:@selector(dropdownMenu:titleForSelectedRow:inComponent:)]){
+        NSString *title = [self.delegate dropdownMenu:self titleForSelectedRow:row inComponent:component];
+        if (title != nil) {
+            attributedTitle = [[NSAttributedString alloc] initWithString:title];
+        }
+    }
+    [button setAttributedTitle:attributedTitle forState:UIControlStateNormal];
+}
 - (void)updateButton:(MKDropdownMenuComponentButton *)button forComponent:(NSInteger)component {
     BOOL enabled = YES;
     if ([self.delegate respondsToSelector:@selector(dropdownMenu:enableComponent:)]) {
@@ -1779,6 +1797,7 @@ static const CGFloat kScrollViewBottomSpace = 5;
     if (row == NSNotFound) {
         [self selectedComponent:nil];
     } else if ([self.delegate respondsToSelector:@selector(dropdownMenu:didSelectRow:inComponent:)]) {
+        [self updateButtonTitleForSelectedRow:row inComponent:self.selectedComponent];
         [self.delegate dropdownMenu:self didSelectRow:row inComponent:self.selectedComponent];
     }
 }
